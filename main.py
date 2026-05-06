@@ -57,10 +57,13 @@ df_hungry_ages = pd.read_sql("""
 
 # CodeGrade step8
 df_4_oldest = pd.read_sql("""
-    SELECT name, age, breed FROM dogs
-    ORDER BY age DESC
-    LIMIT 4;
-""", conn2).sort_values('breed').reset_index(drop=True)
+    SELECT name, age, breed FROM (
+        SELECT name, age, breed FROM dogs
+        ORDER BY age DESC
+        LIMIT 4
+    )
+    ORDER BY breed ASC;
+""", conn2)
 
 
 
